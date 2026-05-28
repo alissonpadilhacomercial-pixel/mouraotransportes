@@ -205,6 +205,7 @@ img{max-width:100%;display:block}
         if (cfg.adminSenha) CREDS.admin.senha = cfg.adminSenha;
         if (cfg.cargosExtra) DB.cargosExtra = cfg.cargosExtra;
       if (cfg.gerPerms) DB.gerPerms = cfg.gerPerms;
+      if (cfg.regulamentos) DB.regulamentos = cfg.regulamentos;
       }
 
       // Demais coleções
@@ -1068,13 +1069,27 @@ tr:hover td{background:rgba(240,165,0,.025)}
 <!-- ══ REGULAMENTO ══ -->
 <div class="section" id="s-reg">
   <div class="ph"><div style="display:flex;align-items:center;gap:14px;margin-bottom:6px">
-      <div style="width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,var(--yw)22,var(--yw)11);border:1px solid var(--yw)33;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;box-shadow:0 4px 16px var(--yw)22">📜</div>
+      <div style="width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,rgba(250,204,21,.2),rgba(250,204,21,.08));border:1px solid rgba(250,204,21,.3);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;box-shadow:0 4px 16px rgba(250,204,21,.15)">📜</div>
       <div>
         <div class="pt" style="font-size:1.5rem;letter-spacing:3px">REGULAMENTO</div>
         <div class="ps">Normas, condutas e diretrizes da empresa</div>
       </div>
     </div></div>
-  <div class="card"><div id="reg-view"><div class="alert a-if">Regulamento ainda não publicado pelo Administrador.</div></div></div>
+
+  <!-- Abas de categorias de regulamento -->
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px" id="reg-tabs-pub">
+    <div class="reg-tab-pub active" onclick="verRegTab(this,'REGRAS GERAIS')" style="padding:7px 16px;border-radius:20px;background:linear-gradient(90deg,var(--acc),var(--acc2));color:#000;font-size:.74rem;font-weight:800;cursor:pointer;letter-spacing:1px">📋 REGRAS GERAIS</div>
+    <div class="reg-tab-pub" onclick="verRegTab(this,'COMBOIOS')" style="padding:7px 16px;border-radius:20px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);color:var(--bl);font-size:.74rem;font-weight:800;cursor:pointer;letter-spacing:1px">🚛 COMBOIOS</div>
+    <div class="reg-tab-pub" onclick="verRegTab(this,'RECRUTAMENTO')" style="padding:7px 16px;border-radius:20px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:var(--gn);font-size:.74rem;font-weight:800;cursor:pointer;letter-spacing:1px">👥 RECRUTAMENTO</div>
+    <div class="reg-tab-pub" onclick="verRegTab(this,'GRUPOS DE WHATSAPP')" style="padding:7px 16px;border-radius:20px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.25);color:#25d366;font-size:.74rem;font-weight:800;cursor:pointer;letter-spacing:1px">💬 WHATSAPP</div>
+    <div class="reg-tab-pub" onclick="verRegTab(this,'DISCORD')" style="padding:7px 16px;border-radius:20px;background:rgba(88,101,242,.1);border:1px solid rgba(88,101,242,.25);color:#5865f2;font-size:.74rem;font-weight:800;cursor:pointer;letter-spacing:1px">🎮 DISCORD</div>
+    <div class="reg-tab-pub" onclick="verRegTab(this,'TRUCKSBOOK')" style="padding:7px 16px;border-radius:20px;background:rgba(240,165,0,.1);border:1px solid rgba(240,165,0,.25);color:var(--acc);font-size:.74rem;font-weight:800;cursor:pointer;letter-spacing:1px">🚛 TRUCKSBOOK</div>
+    <div class="reg-tab-pub" onclick="verRegTab(this,'MÍDIA SOCIAL')" style="padding:7px 16px;border-radius:20px;background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.25);color:var(--pu);font-size:.74rem;font-weight:800;cursor:pointer;letter-spacing:1px">📱 MÍDIA SOCIAL</div>
+  </div>
+  <div class="card">
+    <div id="reg-cat-title" style="font-family:var(--fh);font-size:1.1rem;font-weight:700;color:var(--acc);letter-spacing:2px;margin-bottom:13px;padding-bottom:9px;border-bottom:1px solid var(--bd)">📋 REGRAS GERAIS</div>
+    <div id="reg-view"><div class="alert a-if">Regulamento ainda não publicado pelo Administrador.</div></div>
+  </div>
 </div>
 
 <!-- ══ UTILIDADES ══ -->
@@ -1086,27 +1101,22 @@ tr:hover td{background:rgba(240,165,0,.025)}
         <div class="ps">Links úteis e informações da empresa</div>
       </div>
     </div></div>
-  <div class="g2" style="gap:11px;margin-bottom:16px">
-    <a class="util-link" href="https://trucksbook.eu" target="_blank"><div class="ul-ic">🚛</div><div class="ul-txt"><h4>TrucksBook</h4><p>Registre rotas e KM no TrucksBook.</p></div></a>
-    <a class="util-link" href="https://chat.whatsapp.com/SEU_LINK" target="_blank"><div class="ul-ic">💬</div><div class="ul-txt"><h4>WhatsApp</h4><p>Grupo oficial da equipe.</p></div></a>
-    <a class="util-link" href="#" target="_blank"><div class="ul-ic">🎮</div><div class="ul-txt"><h4>Discord</h4><p>Canal de voz e texto.</p></div></a>
-    <a class="util-link" href="#" target="_blank"><div class="ul-ic">📍</div><div class="ul-txt"><h4>Link Extra</h4><p>Adicione outro link aqui.</p></div></a>
-  </div>
+
   <div class="card"><div class="ct">📋 Como Recrutamos</div>
-    <div class="step"><div class="step-n">1</div><div class="step-t"><h5>Divulgue a Vaga</h5><p>Publique no WhatsApp e TrucksBook com os requisitos mínimos.</p></div></div>
+    <div class="step"><div class="step-n">1</div><div class="step-t"><h5>Envie Sua Inscrição </h5><p>Antes de Se Inscrever, Certifique-se De Ler Todos os Regulamentos, inclusive o de RECRUTAMENTO.</p></div></div>
     <div class="step"><div class="step-n">2</div><div class="step-t"><h5>Candidato preenche a ficha</h5><p>Acesse "Inscrição" no menu lateral. A ficha aparece no painel RH/Admin automaticamente.</p></div></div>
     <div class="step"><div class="step-n">3</div><div class="step-t"><h5>RH avalia e aprova</h5><p>RH visualiza, aprova ou recusa a candidatura e entra em contato pelo WhatsApp.</p></div></div>
-    <div class="step"><div class="step-n">4</div><div class="step-t"><h5>Crie o acesso</h5><p>RH ou Admin cria login e senha em Funcionários → Cadastrar. Informe ao novo membro.</p></div></div>
-    <div class="step"><div class="step-n">5</div><div class="step-t"><h5>Integração</h5><p>Oriente a preencher perfil, veículo e CNH. Adicione ao grupo e apresente o regulamento.</p></div></div>
+    <div class="step"><div class="step-n">4</div><div class="step-t"><h5>Criamos o acesso</h5><p>RH ou Admin cria login e senha Para voçê.</p></div></div>
+    <div class="step"><div class="step-n">5</div><div class="step-t"><h5>Integração</h5><p> Te Orientamos a preencher o perfil, veículo e CNH. Te Adicionamos ao grupo.</p></div></div>
     <hr class="divider"/>
     <div class="ct">📌 Informações da Empresa</div>
     <div style="font-size:.85rem;line-height:1.9">
       <p>• <strong>Nome:</strong> Mourão Transportes</p>
       <p>• <strong>Jogo:</strong> Euro Truck Simulator 2</p>
-      <p>• <strong>Fundação:</strong> — <em>(edite no arquivo)</em></p>
+      <p>• <strong>Fundação:</strong> — <em>(01/06/2026)</em></p>
       <p>• <strong>Sede Virtual:</strong> Campo Mourão – PR</p>
-      <p>• <strong>KM Mínimo Mensal:</strong> — km</p>
-      <p>• <strong>Contato do Dono:</strong> —</p>
+      <p>• <strong>KM Mínimo Mensal:</strong> — 3.000</p>
+      <p>• <strong>Contato do Dono:</strong> — Somente Nos Grupos Oficiais De Comunicação.</p>
     </div>
   </div>
 </div>
@@ -1160,7 +1170,7 @@ tr:hover td{background:rgba(240,165,0,.025)}
   <div class="g3" style="gap:14px;margin-bottom:20px">
 
     <!-- WhatsApp -->
-    <a href="https://chat.whatsapp.com/SEU_LINK_AQUI" target="_blank"
+    <a href="https://chat.whatsapp.com/CYldj4RzW4RJKhhzZijsfj?s=cl&p=a&mlu=2" target="_blank"
       style="text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:0;background:linear-gradient(160deg,rgba(37,211,102,.08),rgba(37,211,102,.03));border:1px solid rgba(37,211,102,.25);border-radius:18px;padding:28px 20px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden"
       onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 16px 40px rgba(37,211,102,.2)';this.style.borderColor='rgba(37,211,102,.5)'"
       onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='rgba(37,211,102,.25)'">
@@ -1176,7 +1186,7 @@ tr:hover td{background:rgba(240,165,0,.025)}
     </a>
 
     <!-- Discord -->
-    <a href="https://discord.gg/SEU_LINK_AQUI" target="_blank"
+    <a href="https://discord.gg/d2eMF5jUfn" target="_blank"
       style="text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:0;background:linear-gradient(160deg,rgba(88,101,242,.08),rgba(88,101,242,.03));border:1px solid rgba(88,101,242,.25);border-radius:18px;padding:28px 20px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden"
       onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 16px 40px rgba(88,101,242,.2)';this.style.borderColor='rgba(88,101,242,.5)'"
       onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='rgba(88,101,242,.25)'">
@@ -1192,7 +1202,7 @@ tr:hover td{background:rgba(240,165,0,.025)}
     </a>
 
     <!-- TrucksBook -->
-    <a href="https://trucksbook.eu/company/SEU_ID_AQUI" target="_blank"
+    <a href="https://trucksbook.eu/company/225311" target="_blank"
       style="text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:0;background:linear-gradient(160deg,rgba(240,165,0,.08),rgba(240,165,0,.03));border:1px solid rgba(240,165,0,.25);border-radius:18px;padding:28px 20px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden"
       onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 16px 40px rgba(240,165,0,.2)';this.style.borderColor='rgba(240,165,0,.5)'"
       onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='rgba(240,165,0,.25)'">
@@ -1211,7 +1221,7 @@ tr:hover td{background:rgba(240,165,0,.025)}
       <div style="display:flex;flex-direction:column;gap:11px">
         <div style="display:flex;align-items:center;gap:12px;padding:10px 13px;background:rgba(15,19,32,.6);border-radius:10px;border:1px solid rgba(34,42,58,.7)">
           <span style="font-size:1.3rem;flex-shrink:0">👑</span>
-          <div><div style="font-size:.7rem;color:var(--mu);text-transform:uppercase;letter-spacing:1px">Dono / Fundador</div><div style="font-size:.88rem;font-weight:700" id="ct-dono">— (edite em Utilidades)</div></div>
+          <div><div style="font-size:.7rem;color:var(--mu);text-transform:uppercase;letter-spacing:1px">Dono / Fundador</div><div style="font-size:.88rem;font-weight:700" id="ct-dono">— (AlissonG_044)</div></div>
         </div>
         <div style="display:flex;align-items:center;gap:12px;padding:10px 13px;background:rgba(15,19,32,.6);border-radius:10px;border:1px solid rgba(34,42,58,.7)">
           <span style="font-size:1.3rem;flex-shrink:0">🏢</span>
@@ -1229,19 +1239,19 @@ tr:hover td{background:rgba(240,165,0,.025)}
     </div>
 
     <div class="card" style="border-color:rgba(240,165,0,.15)">
-      <div class="ct">⏰ Horários de Atividade</div>
+      <div class="ct">⏰ Horários de Atendimento</div>
       <div style="display:flex;flex-direction:column;gap:8px">
         <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 13px;background:rgba(15,19,32,.6);border-radius:10px;border:1px solid rgba(34,42,58,.7)">
           <div style="display:flex;align-items:center;gap:8px"><span>📅</span><span style="font-size:.84rem">Segunda — Sexta</span></div>
-          <span class="badge bg-g" style="font-size:.65rem">19h — 23h</span>
+          <span class="badge bg-g" style="font-size:.65rem">09h — 17h</span>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 13px;background:rgba(15,19,32,.6);border-radius:10px;border:1px solid rgba(34,42,58,.7)">
           <div style="display:flex;align-items:center;gap:8px"><span>📅</span><span style="font-size:.84rem">Sábado</span></div>
-          <span class="badge bg-b" style="font-size:.65rem">14h — 00h</span>
+          <span class="badge bg-b" style="font-size:.65rem">09h — 12h</span>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 13px;background:rgba(15,19,32,.6);border-radius:10px;border:1px solid rgba(34,42,58,.7)">
           <div style="display:flex;align-items:center;gap:8px"><span>📅</span><span style="font-size:.84rem">Domingo</span></div>
-          <span class="badge bg-y" style="font-size:.65rem">À combinar</span>
+          <span class="badge bg-y" style="font-size:.65rem">Sem Expediente</span>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 13px;background:rgba(34,197,94,.04);border-radius:10px;border:1px solid rgba(34,197,94,.2)">
           <div style="display:flex;align-items:center;gap:8px"><span style="width:8px;height:8px;border-radius:50%;background:var(--gn);box-shadow:0 0 8px var(--gn);display:inline-block;animation:dotPulse 2s infinite"></span><span style="font-size:.84rem;color:var(--gn);font-weight:700">Portal online agora</span></div>
@@ -1817,9 +1827,35 @@ tr:hover td{background:rgba(240,165,0,.025)}
   </div>
 
   <div class="isec" id="adm-reg">
-    <div class="card" style="max-width:680px"><div class="ct">📜 Editar Regulamento</div><div id="msg-reg"></div>
-      <div class="fg"><label>Conteúdo (suporta quebras de linha)</label><textarea class="fc" id="reg-txt" rows="15" placeholder="Digite o regulamento aqui..."></textarea></div>
-      <button class="btn btn-a" onclick="salvarReg()">💾 Salvar</button>
+    <div class="card">
+      <div class="ct">📜 Gerenciar Regulamentos</div>
+      <p style="font-size:.81rem;color:var(--mu);margin-bottom:16px">Edite o conteúdo de cada categoria de regulamento separadamente.</p>
+
+      <!-- Seletor de categoria -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+        <button class="btn btn-a btn-sm" onclick="selecionarRegAdm('REGRAS GERAIS',this)">📋 Regras Gerais</button>
+        <button class="btn btn-o btn-sm" onclick="selecionarRegAdm('COMBOIOS',this)">🚛 Comboios</button>
+        <button class="btn btn-o btn-sm" onclick="selecionarRegAdm('RECRUTAMENTO',this)">👥 Recrutamento</button>
+        <button class="btn btn-o btn-sm" onclick="selecionarRegAdm('GRUPOS DE WHATSAPP',this)">💬 WhatsApp</button>
+        <button class="btn btn-o btn-sm" onclick="selecionarRegAdm('DISCORD',this)">🎮 Discord</button>
+        <button class="btn btn-o btn-sm" onclick="selecionarRegAdm('TRUCKSBOOK',this)">🚛 TrucksBook</button>
+        <button class="btn btn-o btn-sm" onclick="selecionarRegAdm('MÍDIA SOCIAL',this)">📱 Mídia Social</button>
+      </div>
+
+      <div style="background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:10px 14px;margin-bottom:13px">
+        <span style="font-size:.78rem;color:var(--bl);font-weight:700">Editando: </span>
+        <span id="reg-cat-editing" style="font-size:.78rem;color:var(--tx);font-weight:700">REGRAS GERAIS</span>
+      </div>
+
+      <div id="msg-reg"></div>
+      <div class="fg">
+        <label>Conteúdo (suporta quebras de linha)</label>
+        <textarea class="fc" id="reg-txt" rows="15" placeholder="Digite o regulamento desta categoria aqui..."></textarea>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-a" onclick="salvarReg()">💾 Salvar Categoria</button>
+        <button class="btn btn-r" onclick="limparReg()">🗑 Limpar</button>
+      </div>
     </div>
   </div>
 
@@ -2245,6 +2281,7 @@ async function fbSaveConfig(){
   if(!window.fbSet)return;
   await window.fbSet('config','geral',{
     regulamento:DB.regulamento,
+    regulamentos:DB.regulamentos||{},
     adminLogin:CREDS.admin.login,
     adminSenha:CREDS.admin.senha,
     cargosExtra:DB.cargosExtra||[],
@@ -2473,7 +2510,8 @@ function prevCNH(){
 }
 function prevCracha(){
   const fn=getFn();if(!fn)return;const p=fn.perfil||{};
-  const el=document.getElementById('cr-foto');if(el)el.src=p.foto||'https://placehold.co/80x80/252d3f/7a8499?text=?';
+  const foto=p.foto||(document.getElementById('pf-data')?document.getElementById('pf-data').value:'')||'https://placehold.co/80x80/252d3f/7a8499?text=?';
+  const el=document.getElementById('cr-foto');if(el)el.src=foto;
   stxt('cr-nome',p.nome||fn.nome);stxt('cr-cargo',fn.cargo||'Motorista');
   stxt('cr-mat','Matrícula: '+(fn.matricula||'—'));stxt('cr-desde','Na empresa desde: '+(p.desde||'—'));
   const multas=(fn.cnh&&fn.cnh.multas)?fn.cnh.multas.length:0;
@@ -2739,10 +2777,22 @@ function admCNHs(){
 }
 function admCrachas(){
   const el=document.getElementById('adm-crachas-html');if(!el)return;
-  el.innerHTML=DB.funcionarios.map(fn=>{const p=fn.perfil||{};const multas=(fn.cnh&&fn.cnh.multas)?fn.cnh.multas.length:0;return`<div class="cracha" style="width:210px;flex-shrink:0"><div class="c-top" style="font-size:.88rem">Mourão Transportes</div><div class="c-sub" style="font-size:.54rem;margin-bottom:11px">ETS2</div><img src="${p.foto||'https://placehold.co/70x70/252d3f/7a8499?text=?'}" style="width:68px;height:68px;border-radius:50%;border:2px solid var(--acc);object-fit:cover;margin:0 auto 10px"/><div class="c-nome" style="font-size:1.05rem">${fn.nome}</div><div class="c-cargo" style="font-size:.64rem">${fn.cargo||'Motorista'}</div><div class="c-mat" style="font-size:.59rem">Mat: ${fn.matricula||'—'}</div><div class="c-sit" style="margin-top:8px"><span class="badge ${fn.situacao==='Ativo'?'bg-g':'bg-r'}" style="font-size:.59rem">${fn.situacao}</span>${multas>0?`<br><span class="badge bg-r" style="font-size:.59rem;margin-top:4px;display:inline-flex">⚠️${multas}</span>`:''}</div><div class="c-stripe" style="height:4px;margin:11px -20px -20px"></div></div>`;}).join('');
+  el.innerHTML=DB.funcionarios.map(fn=>{const p=fn.perfil||{};const multas=(fn.cnh&&fn.cnh.multas)?fn.cnh.multas.length:0;
+    return '<div class="cracha" style="width:210px;flex-shrink:0">'+
+      '<div class="c-top" style="font-size:.88rem">Mourão Transportes</div>'+
+      '<div class="c-sub" style="font-size:.54rem;margin-bottom:11px">ETS2</div>'+
+      '<img src="'+(p.foto||'https://placehold.co/70x70/252d3f/7a8499?text=?')+'" style="width:68px;height:68px;border-radius:50%;border:2px solid var(--acc);object-fit:cover;margin:0 auto 10px;display:block"/>'+
+      '<div class="c-nome" style="font-size:1.05rem">'+fn.nome+'</div>'+
+      '<div class="c-cargo" style="font-size:.64rem">'+(fn.cargo||'Motorista')+'</div>'+
+      '<div class="c-mat" style="font-size:.59rem">Mat: '+(fn.matricula||'—')+'</div>'+
+      '<div class="c-sit" style="margin-top:8px">'+
+        '<span class="badge '+(fn.situacao==='Ativo'?'bg-g':'bg-r')+'" style="font-size:.59rem">'+fn.situacao+'</span>'+
+        (multas>0?'<br><span class="badge bg-r" style="font-size:.59rem;margin-top:4px;display:inline-flex">⚠️'+multas+'</span>':'')+
+      '</div>'+
+      '<div class="c-stripe" style="height:4px;margin:11px -20px -20px"></div>'+
+    '</div>';
+  }).join('');
 }
-
-/* ══ AVISOS ══ */
 function publicarAviso(){
   if(!v('avi-titulo')||!v('avi-msg')){msg('msg-aviso','Preencha título e mensagem.','er');return;}
   DB.avisos.unshift({titulo:v('avi-titulo'),msg:v('avi-msg'),cat:v('avi-cat'),data:hoje()});
@@ -2758,8 +2808,59 @@ function renderAvisosFront(){
 function excluirAviso(i){if(!confirm('Excluir aviso?'))return;const aid=DB.avisos[i].id;DB.avisos.splice(i,1);admAvi();renderAvisosFront();refreshDash();if(aid)fbDelAviso(aid);}
 
 /* ══ REGULAMENTO ══ */
-function salvarReg(){DB.regulamento=v('reg-txt');msg('msg-reg','✅ Salvo!','ok');renderReg();addLog('Admin','Regulamento atualizado');fbSaveConfig();}
-function renderReg(){const el=document.getElementById('reg-view');if(!el)return;el.innerHTML=DB.regulamento?`<div style="line-height:1.9;font-size:.85rem;white-space:pre-wrap">${DB.regulamento}</div>`:'<div class="alert a-if">Regulamento ainda não publicado.</div>';}
+function salvarReg(){
+  const cat=document.getElementById('reg-cat-editing')?.textContent||'REGRAS GERAIS';
+  if(!DB.regulamentos)DB.regulamentos={};
+  DB.regulamentos[cat]=v('reg-txt');
+  msg('msg-reg','✅ "'+cat+'" salvo!','ok');
+  renderReg();addLog('Admin','Regulamento atualizado: '+cat);
+  fbSaveConfig();
+}
+function limparReg(){
+  if(!confirm('Limpar o conteúdo desta categoria?'))return;
+  V('reg-txt','');
+}
+function selecionarRegAdm(cat,btn){
+  if(!DB.regulamentos)DB.regulamentos={};
+  // Atualizar botões
+  document.querySelectorAll('#adm-reg .btn').forEach(b=>{
+    b.classList.remove('btn-a');b.classList.add('btn-o');
+  });
+  if(btn){btn.classList.remove('btn-o');btn.classList.add('btn-a');}
+  // Atualizar label
+  const label=document.getElementById('reg-cat-editing');
+  if(label)label.textContent=cat;
+  // Carregar conteúdo
+  V('reg-txt',DB.regulamentos[cat]||'');
+  msg('msg-reg','','');
+}
+function verRegTab(el,cat){
+  // Atualizar abas visuais
+  document.querySelectorAll('.reg-tab-pub').forEach(t=>{
+    t.style.background='rgba(59,130,246,.1)';t.style.borderColor='rgba(59,130,246,.25)';t.style.color='var(--bl)';
+    t.classList.remove('active');
+  });
+  el.style.background='linear-gradient(90deg,var(--acc),var(--acc2))';
+  el.style.color='#000';el.style.borderColor='transparent';
+  el.classList.add('active');
+  // Atualizar título
+  const title=document.getElementById('reg-cat-title');
+  if(title)title.textContent=el.textContent;
+  // Renderizar conteúdo da categoria
+  renderReg(cat);
+}
+function renderReg(cat){
+  const el=document.getElementById('reg-view');if(!el)return;
+  if(!DB.regulamentos)DB.regulamentos={};
+  const useCat=cat||(document.getElementById('reg-cat-title')?.textContent?.replace(/^[^a-zA-Z0-9]+/,'').trim()||'REGRAS GERAIS');
+  // Tentar encontrar a categoria pelo nome
+  const keys=Object.keys(DB.regulamentos);
+  const match=keys.find(k=>k.toUpperCase().includes(useCat.toUpperCase().split(' ')[0]))||useCat;
+  const content=DB.regulamentos[match]||DB.regulamentos[useCat]||'';
+  el.innerHTML=content
+    ?`<div style="line-height:2;font-size:.86rem;white-space:pre-wrap;color:var(--tx)">${content}</div>`
+    :'<div class="alert a-if">Esta categoria ainda não foi preenchida pelo Administrador.</div>';
+}
 
 /* ══ SOLICITAÇÕES ══ */
 function abrirSolic(login){document.getElementById('sl-login').value=login;V('sl-just','');openM('m-solic');}
