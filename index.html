@@ -234,6 +234,8 @@ img{max-width:100%;display:block}
       const log = await window.fbGetAll('log');
       if (log.length > 0) DB.log = log.sort((a,b)=>(b.ts||0)-(a.ts||0));
 
+      // Restaurar fotos do localStorage
+      restaurarFotos();
       console.log('✅ Sincronização completa!');
       showSyncStatus('✅ Conectado ao banco de dados!', true);
       refreshDash();
@@ -938,7 +940,7 @@ tr:hover td{background:rgba(240,165,0,.025)}
     <div class="sbi mot-only" style="display:none" onclick="motTab('cnh');navActive(this)"><span class="si">📄</span><span class="st">Minha CNH</span></div>
     <div class="sbi mot-only" style="display:none" onclick="motTab('cracha');navActive(this)"><span class="si">🪪</span><span class="st">Crachá</span></div>
     <div class="sbi mot-only" style="display:none" onclick="motTab('manut');navActive(this)"><span class="si">🔧</span><span class="st">Manutenção</span></div>
-    <div class="sbi mot-only" style="display:none" onclick="motTab('km');navActive(this)"><span class="si">📍</span><span class="st">Registro KM</span></div>
+
 
     <div class="sb-slbl">Setores</div>
     <div class="sbg-hdr" onclick="toggleGrp(this)"><span class="sg-i">👥</span><span class="sg-t">RH</span><span class="sg-a">▶</span></div>
@@ -1108,6 +1110,7 @@ tr:hover td{background:rgba(240,165,0,.025)}
     <div class="step"><div class="step-n">3</div><div class="step-t"><h5>RH avalia e aprova</h5><p>RH visualiza, aprova ou recusa a candidatura e entra em contato pelo WhatsApp.</p></div></div>
     <div class="step"><div class="step-n">4</div><div class="step-t"><h5>Criamos o acesso</h5><p>RH ou Admin cria login e senha Para voçê.</p></div></div>
     <div class="step"><div class="step-n">5</div><div class="step-t"><h5>Integração</h5><p> Te Orientamos a preencher o perfil, veículo e CNH. Te Adicionamos ao grupo.</p></div></div>
+    <div class="step"><div class="step-n">6</div><div class="step-t"><h5>ENTRAR NO TRUCKSBOOK PARA FAZER O TESTE</h5><p>Agora é só participar dos comboios, cumprir as metas e se divertir!</p></div></div>
     <hr class="divider"/>
     <div class="ct">📌 Informações da Empresa</div>
     <div style="font-size:.85rem;line-height:1.9">
@@ -1281,9 +1284,9 @@ tr:hover td{background:rgba(240,165,0,.025)}
   <div class="card" style="border-color:rgba(240,165,0,.1)">
     <div class="ct">🔗 Links Rápidos</div>
     <div style="display:flex;gap:10px;flex-wrap:wrap">
-      <a href="https://trucksbook.eu" target="_blank" style="display:flex;align-items:center;gap:7px;padding:8px 15px;background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.2);border-radius:20px;text-decoration:none;color:var(--acc);font-size:.76rem;font-weight:700;transition:all .2s" onmouseover="this.style.background='rgba(240,165,0,.16)'" onmouseout="this.style.background='rgba(240,165,0,.08)'">🚛 TrucksBook</a>
-      <a href="https://store.steampowered.com/app/227300/Euro_Truck_Simulator_2/" target="_blank" style="display:flex;align-items:center;gap:7px;padding:8px 15px;background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:20px;text-decoration:none;color:var(--bl);font-size:.76rem;font-weight:700;transition:all .2s" onmouseover="this.style.background='rgba(59,130,246,.16)'" onmouseout="this.style.background='rgba(59,130,246,.08)'">🎮 ETS2 na Steam</a>
-      <a href="https://truckersmp.com" target="_blank" style="display:flex;align-items:center;gap:7px;padding:8px 15px;background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2);border-radius:20px;text-decoration:none;color:var(--pu);font-size:.76rem;font-weight:700;transition:all .2s" onmouseover="this.style.background='rgba(168,85,247,.16)'" onmouseout="this.style.background='rgba(168,85,247,.08)'">🌐 TruckersMP</a>
+      <a href="" target="_blank" style="display:flex;align-items:center;gap:7px;padding:8px 15px;background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.2);border-radius:20px;text-decoration:none;color:var(--acc);font-size:.76rem;font-weight:700;transition:all .2s" onmouseover="this.style.background='rgba(240,165,0,.16)'" onmouseout="this.style.background='rgba(240,165,0,.08)'">🚛 INDISPONIVEL</a>
+      <a href="" target="_blank" style="display:flex;align-items:center;gap:7px;padding:8px 15px;background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:20px;text-decoration:none;color:var(--bl);font-size:.76rem;font-weight:700;transition:all .2s" onmouseover="this.style.background='rgba(59,130,246,.16)'" onmouseout="this.style.background='rgba(59,130,246,.08)'">🎮 INDISPONIVEL</a>
+      <a href="" target="_blank" style="display:flex;align-items:center;gap:7px;padding:8px 15px;background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2);border-radius:20px;text-decoration:none;color:var(--pu);font-size:.76rem;font-weight:700;transition:all .2s" onmouseover="this.style.background='rgba(168,85,247,.16)'" onmouseout="this.style.background='rgba(168,85,247,.08)'">🌐INDISPONIVEL</a>
     </div>
   </div>
 </div>
@@ -1325,7 +1328,7 @@ tr:hover td{background:rgba(240,165,0,.025)}
     <div class="itab" data-t="cnh" onclick="motTab('cnh')">📄 CNH</div>
     <div class="itab" data-t="cracha" onclick="motTab('cracha')">🪪 Crachá</div>
     <div class="itab" data-t="manut" onclick="motTab('manut')">🔧 Manutenção</div>
-    <div class="itab" data-t="km" onclick="motTab('km')">📍 KM</div>
+    
   </div>
   <div class="isec active" id="ms-perfil">
     <div class="card" style="max-width:700px"><div class="ct">👤 Meu Perfil</div>
@@ -1534,7 +1537,7 @@ tr:hover td{background:rgba(240,165,0,.025)}
     <div class="itab" onclick="iTab('rh','rel')">📊 Relatório</div>
   </div>
   <div class="isec active" id="rh-fichas"><div class="card"><div class="ct">Candidaturas</div><div id="rh-fichas-html"></div></div></div>
-  <div class="isec" id="rh-cad"><div class="card" style="max-width:640px"><div class="ct">➕ Cadastrar Funcionário</div><div id="msg-rh-cad"></div>
+  <div class="isec" id="rh-cad"><div class="card" style="max-width:680px"><div class="ct">➕ Cadastrar Funcionário</div><div id="msg-rh-cad"></div>
     <div class="g2">
       <div class="fg"><label>Nome *</label><input class="fc" id="rh-fn-nome"/></div>
       <div class="fg"><label>Login *</label><input class="fc" id="rh-fn-login"/></div>
@@ -1542,6 +1545,12 @@ tr:hover td{background:rgba(240,165,0,.025)}
       <div class="fg"><label>Matrícula</label><input class="fc" id="rh-fn-mat" placeholder="MT0001"/></div>
       <div class="fg"><label>Cargo</label><select class="fc" id="rh-fn-cargo"><option>Motorista</option><option>Mecânico</option><option>Assistente</option></select></div>
       <div class="fg"><label>Situação</label><select class="fc" id="rh-fn-sit"><option>Ativo</option><option>Desligado</option><option>Férias</option><option>Licença</option></select></div>
+    </div>
+    <hr class="divider"/>
+    <div style="font-size:.75rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">📄 Dados da CNH (opcional)</div>
+    <div class="g2">
+      <div class="fg"><label>Número da CNH</label><input class="fc" id="rh-fn-cnh-num" placeholder="00000000000"/></div>
+      <div class="fg"><label>Validade da CNH</label><input class="fc" type="date" id="rh-fn-cnh-venc"/></div>
     </div>
     <button class="btn btn-a" onclick="criarFn('rh')">➕ Cadastrar</button>
   </div></div>
@@ -1669,7 +1678,21 @@ tr:hover td{background:rgba(240,165,0,.025)}
       <div class="dc" style="--c:var(--rd)" data-ic="⚠️"><div class="dc-val" id="gr-mu">0</div><div class="dc-lbl">Multas</div></div>
     </div>
   </div>
-  <div class="isec" id="ger-km"><div class="card"><div class="ct">📍 KM por Motorista</div><div id="ger-km-html"></div></div></div>
+  <div class="isec" id="ger-km">
+    <div class="card" style="max-width:640px;margin-bottom:14px">
+      <div class="ct">➕ Registrar KM para Motorista</div>
+      <div id="msg-ger-km-reg"></div>
+      <div class="g2">
+        <div class="fg"><label>Motorista</label><select class="fc" id="ger-km-fn"></select></div>
+        <div class="fg"><label>Data</label><input class="fc" type="date" id="ger-km-data"/></div>
+        <div class="fg"><label>KM Percorrido</label><input class="fc" type="number" id="ger-km-val" placeholder="Ex: 320"/></div>
+        <div class="fg"><label>Rota</label><input class="fc" id="ger-km-rota" placeholder="Ex: SP → CTB"/></div>
+        <div class="fg"><label>Carga</label><input class="fc" id="ger-km-carga" placeholder="Ex: Cimento"/></div>
+      </div>
+      <button class="btn btn-a" onclick="regKMAdmin('ger')">📍 Registrar KM</button>
+    </div>
+    <div class="card"><div class="ct">📍 KM por Motorista</div><div id="ger-km-html"></div></div>
+  </div>
   <div class="isec" id="ger-solic"><div class="card"><div class="ct">Solicitações Enviadas</div><div id="ger-solic-html"></div></div></div>
 
   <!-- Painel de Permissões do Gerente -->
@@ -1765,7 +1788,7 @@ tr:hover td{background:rgba(240,165,0,.025)}
     </div>
   </div>
 
-  <div class="isec" id="adm-cad"><div class="card" style="max-width:660px"><div class="ct">➕ Cadastrar Funcionário</div><div id="msg-adm-cad"></div>
+  <div class="isec" id="adm-cad"><div class="card" style="max-width:700px"><div class="ct">➕ Cadastrar Funcionário</div><div id="msg-adm-cad"></div>
     <div class="g2">
       <div class="fg"><label>Nome *</label><input class="fc" id="adm-fn-nome"/></div>
       <div class="fg"><label>Login *</label><input class="fc" id="adm-fn-login"/></div>
@@ -1773,6 +1796,12 @@ tr:hover td{background:rgba(240,165,0,.025)}
       <div class="fg"><label>Matrícula</label><input class="fc" id="adm-fn-mat" placeholder="MT0001"/></div>
       <div class="fg"><label>Cargo</label><select class="fc" id="adm-fn-cargo"><option>Motorista</option><option>Mecânico</option><option>RH</option><option>Gerente</option><option>Assistente</option></select></div>
       <div class="fg"><label>Situação</label><select class="fc" id="adm-fn-sit"><option>Ativo</option><option>Desligado</option><option>Férias</option><option>Licença</option></select></div>
+    </div>
+    <hr class="divider"/>
+    <div style="font-size:.75rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">📄 Dados da CNH (opcional)</div>
+    <div class="g2">
+      <div class="fg"><label>Número da CNH</label><input class="fc" id="adm-fn-cnh-num" placeholder="00000000000"/></div>
+      <div class="fg"><label>Validade da CNH</label><input class="fc" type="date" id="adm-fn-cnh-venc"/></div>
     </div>
     <button class="btn btn-a" onclick="criarFn('adm')">➕ Criar</button>
   </div></div>
@@ -1861,7 +1890,22 @@ tr:hover td{background:rgba(240,165,0,.025)}
 
   <div class="isec" id="adm-sol"><div class="card"><div class="ct">📤 Aprovações do Gerente</div><div id="adm-sol-html"></div></div></div>
 
-  <div class="isec" id="adm-km"><div class="card"><div class="ct">📍 KM Geral por Motorista</div><div id="adm-km-html"></div></div></div>
+  <div class="isec" id="adm-km">
+    <div class="card" style="max-width:640px;margin-bottom:14px">
+      <div class="ct">➕ Registrar KM para Motorista</div>
+      <div id="msg-adm-km-reg"></div>
+      <div class="g2">
+        <div class="fg"><label>Motorista</label><select class="fc" id="adm-km-fn"></select></div>
+        <div class="fg"><label>Data</label><input class="fc" type="date" id="adm-km-data"/></div>
+        <div class="fg"><label>KM Percorrido</label><input class="fc" type="number" id="adm-km-val" placeholder="Ex: 320"/></div>
+        <div class="fg"><label>Rota</label><input class="fc" id="adm-km-rota" placeholder="Ex: SP → CTB"/></div>
+        <div class="fg"><label>Carga</label><input class="fc" id="adm-km-carga" placeholder="Ex: Cimento"/></div>
+        <div class="fg"><label>Observação</label><input class="fc" id="adm-km-obs" placeholder="Opcional"/></div>
+      </div>
+      <button class="btn btn-a" onclick="regKMAdmin('adm')">📍 Registrar KM</button>
+    </div>
+    <div class="card"><div class="ct">📍 KM Geral por Motorista</div><div id="adm-km-html"></div></div>
+  </div>
 
   <div class="isec" id="adm-gerperms">
     <div class="card">
@@ -1960,52 +2004,6 @@ tr:hover td{background:rgba(240,165,0,.025)}
   </div>
 </div>
 
-<!-- ══ CALENDÁRIO ══ -->
-<div class="section" id="s-cal">
-  <div class="ph"><div style="display:flex;align-items:center;gap:14px;margin-bottom:6px">
-      <div style="width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,var(--bl)22,var(--bl)11);border:1px solid var(--bl)33;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;box-shadow:0 4px 16px var(--bl)22">📅</div>
-      <div>
-        <div class="pt" style="font-size:1.5rem;letter-spacing:3px">CALENDÁRIO</div>
-        <div class="ps">Eventos, reuniões e datas importantes</div>
-      </div>
-    </div></div>
-  <div class="g2" style="align-items:flex-start;gap:14px">
-    <div class="card"><div class="ct">📅 <span id="cal-mes-ano"></span>
-      <div style="display:flex;gap:5px;margin-left:auto">
-        <button class="btn btn-o btn-xs" onclick="calMes(-1)">◀</button>
-        <button class="btn btn-o btn-xs" onclick="calMes(1)">▶</button>
-      </div>
-    </div>
-    <div class="cal-grid" id="cal-dias-sem" style="margin-bottom:4px">
-      <div style="font-size:.65rem;color:var(--mu);text-align:center">Dom</div>
-      <div style="font-size:.65rem;color:var(--mu);text-align:center">Seg</div>
-      <div style="font-size:.65rem;color:var(--mu);text-align:center">Ter</div>
-      <div style="font-size:.65rem;color:var(--mu);text-align:center">Qua</div>
-      <div style="font-size:.65rem;color:var(--mu);text-align:center">Qui</div>
-      <div style="font-size:.65rem;color:var(--mu);text-align:center">Sex</div>
-      <div style="font-size:.65rem;color:var(--mu);text-align:center">Sáb</div>
-    </div>
-    <div class="cal-grid" id="cal-grid"></div>
-    </div>
-    <div class="card" style="flex:1">
-      <div class="ct">➕ Novo Evento</div>
-      <div id="msg-evento"></div>
-      <div class="fg"><label>Título</label><input class="fc" id="ev-titulo"/></div>
-      <div class="fg"><label>Data</label><input class="fc" type="date" id="ev-data"/></div>
-      <div class="fg"><label>Tipo</label>
-        <select class="fc" id="ev-tipo">
-          <option>🏢 Reunião</option><option>🚚 Evento de Caravana</option><option>⚠️ Prazo</option>
-          <option>🎉 Celebração</option><option>🔧 Manutenção Prog.</option><option>📋 Outro</option>
-        </select>
-      </div>
-      <div class="fg"><label>Descrição</label><textarea class="fc" id="ev-desc" rows="2"></textarea></div>
-      <button class="btn btn-a" onclick="addEvento()">➕ Adicionar</button>
-      <hr class="divider"/>
-      <div class="ct" style="font-size:.85rem;margin-bottom:9px">Próximos Eventos</div>
-      <div id="eventos-lista"></div>
-    </div>
-  </div>
-</div>
 
 <!-- ══ ESTATÍSTICAS ══ -->
 <div class="section" id="s-stats">
@@ -2252,11 +2250,28 @@ function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2
 async function fbSaveFn(fn){
   if(!window.fbSet)return;
   const id=fn.login;
-  // Remover foto do perfil e veículo antes de salvar (muito grande para Firestore)
-  const toSave={...fn};
-  if(toSave.perfil){toSave.perfil={...toSave.perfil};delete toSave.perfil.foto;}
-  if(toSave.veiculo){toSave.veiculo={...toSave.veiculo};delete toSave.veiculo.foto;}
+  // Salvar fotos no localStorage (base64 é grande demais pro Firestore)
+  try {
+    if(fn.perfil&&fn.perfil.foto) localStorage.setItem('foto_perfil_'+id, fn.perfil.foto);
+    if(fn.veiculo&&fn.veiculo.foto) localStorage.setItem('foto_veiculo_'+id, fn.veiculo.foto);
+  } catch(e){}
+  // Salvar dados sem foto no Firestore
+  const toSave=JSON.parse(JSON.stringify(fn));
+  if(toSave.perfil&&toSave.perfil.foto) delete toSave.perfil.foto;
+  if(toSave.veiculo&&toSave.veiculo.foto) delete toSave.veiculo.foto;
   await window.fbSet('funcionarios', id, toSave);
+}
+
+// Restaurar fotos do localStorage após sync
+function restaurarFotos(){
+  DB.funcionarios.forEach(fn=>{
+    try {
+      const fp=localStorage.getItem('foto_perfil_'+fn.login);
+      const fv=localStorage.getItem('foto_veiculo_'+fn.login);
+      if(fp){if(!fn.perfil)fn.perfil={};fn.perfil.foto=fp;}
+      if(fv){if(!fn.veiculo)fn.veiculo={};fn.veiculo.foto=fv;}
+    } catch(e){}
+  });
 }
 async function fbDelFn(login){if(window.fbDel)await window.fbDel('funcionarios',login);}
 async function fbSaveInsc(insc){
@@ -2364,7 +2379,7 @@ function nav(id,el){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   const s=document.getElementById(id);if(s)s.classList.add('active');
   navActive(el);
-  const lbls={'s-dash':'Dashboard','s-avisos':'Avisos','s-reg':'Regulamento','s-util':'Dúvidas','s-contato':'Contato','s-insc':'Inscrição','s-mot-login':'Login Motorista','s-motorista':'Motorista','s-rh':'RH','s-mec':'Mecânica','s-ger':'Gerente','s-adm':'Administrador','s-ranking':'Ranking KM','s-stats':'Estatísticas','s-metas':'Metas','s-fin':'Financeiro','s-frota':'Frota','s-mural':'Mural','s-chat':'Chat Interno','s-cal':'Calendário'};
+  const lbls={'s-dash':'Dashboard','s-avisos':'Avisos','s-reg':'Regulamento','s-util':'Dúvidas','s-contato':'Contato','s-insc':'Inscrição','s-mot-login':'Login Motorista','s-motorista':'Motorista','s-rh':'RH','s-mec':'Mecânica','s-ger':'Gerente','s-adm':'Administrador','s-ranking':'Ranking KM','s-stats':'Estatísticas','s-metas':'Metas','s-fin':'Financeiro','s-frota':'Frota','s-mural':'Mural','s-chat':'Chat Interno'};
   document.getElementById('tb-page').textContent=lbls[id]||id;
   if(id==='s-dash')refreshDash();
   if(id==='s-rh'){rhFichas();rhLista();rhRel();popSel('ms-rh');popSel('ponto-fn');}
@@ -2374,7 +2389,7 @@ function nav(id,el){
   if(id==='s-avisos')renderAvisosFront();
   // Guard de acesso
   const restricted_adm=['s-stats','s-metas','s-fin','s-frota','s-mural'];
-  const restricted_logged=['s-ranking','s-chat','s-cal'];
+  const restricted_logged=['s-ranking','s-chat'];
   if(restricted_adm.includes(id)&&S.role!=='admin'){
     showAccessDenied(id,'admin');return;
   }
@@ -2382,13 +2397,14 @@ function nav(id,el){
     showAccessDenied(id,'logged');return;
   }
   if(id==='s-ranking')renderRanking();
+  if(id==='s-adm'||id==='s-ger'){popSelKM('adm-km-fn');popSelKM('ger-km-fn');}
   if(id==='s-stats')renderStats();
   if(id==='s-metas')renderMetas();
   if(id==='s-fin')renderFinanceiro();
   if(id==='s-frota'){renderFrota();popSel('fr-mot');}
   if(id==='s-mural')renderMural();
   if(id==='s-chat')renderChat();
-  if(id==='s-cal'){renderCal();}
+  
   if(id==='s-adm'&&arguments[0]==='s-adm'){renderCargos();}
   if(id==='s-reg')renderReg();
 }
@@ -2409,7 +2425,7 @@ function iTab(p,t){
   if(t==='abertas')renderMecAbertas();if(t==='hist')renderMecHist();
   if(t==='estoque')renderEstoque();if(t==='os')renderOSHist();
   if(t==='perfis')admPerfis();if(t==='cnhs')admCNHs();if(t==='crachas')admCrachas();
-  if(t==='km')admKM();if(t==='log')renderLog();if(t==='bkp')bkpCount();
+  if(t==='km'){admKM();gerKM();popSelKM('adm-km-fn');popSelKM('ger-km-fn');}if(t==='log')renderLog();if(t==='bkp')bkpCount();
   if(t==='gerperms')renderAdmGerPerms();
   if(t==='perm')renderPermGer();
   if(['adm-fn','adm-mul','adm-cand','adm-mnt','adm-avi','adm-fin'].includes(t))gerAdmRefresh();
@@ -2441,6 +2457,13 @@ function loginMot(){
   setSess(fn.nome,'🚚 Motorista');
   document.querySelectorAll('.mot-only').forEach(el=>el.style.display='flex');
   document.getElementById('sb-mot-login').style.display='none';
+  // Restaurar fotos do localStorage antes de carregar
+  try{
+    const fp=localStorage.getItem('foto_perfil_'+fn.login);
+    const fv=localStorage.getItem('foto_veiculo_'+fn.login);
+    if(fp){if(!fn.perfil)fn.perfil={};fn.perfil.foto=fp;}
+    if(fv){if(!fn.veiculo)fn.veiculo={};fn.veiculo.foto=fv;}
+  }catch(e){}
   carregarMot(fn);nav('s-motorista');motTab('perfil');addLog('Login',fn.nome+' (motorista) acessou');
 }
 function logout(){
@@ -2469,6 +2492,11 @@ function setImg(pi,ii,src){const im=document.getElementById(pi);if(!im)return;im
 function getFn(){return DB.funcionarios.find(f=>f.login===S.user);}
 function carregarMot(fn){
   const p=fn.perfil||{},ve=fn.veiculo||{},c=fn.cnh||{};
+  // Restaurar fotos do localStorage se não estiverem no objeto
+  try {
+    if(!p.foto){const fp=localStorage.getItem('foto_perfil_'+fn.login);if(fp)p.foto=fp;}
+    if(!ve.foto){const fv=localStorage.getItem('foto_veiculo_'+fn.login);if(fv)ve.foto=fv;}
+  } catch(e){}
   V('p-nome',p.nome||fn.nome);V('p-tel',p.tel||'');V('p-idade',p.idade||'');V('p-vpref',p.vpref||'Caminhão');V('p-desde',p.desde||'');V('p-bio',p.bio||'');
   if(p.foto){setImg('pf-prev','pf-ic',p.foto);document.getElementById('pf-data').value=p.foto;}
   ['modelo','apelido','ano','renavam','ipva','placa','carroceria','marca'].forEach(k=>V('v-'+k,ve[k]||''));V('v-sit',ve.situacao||'Em Circulação');
@@ -2479,12 +2507,17 @@ function carregarMot(fn){
 }
 function salvarPerfil(){
   const fn=getFn();if(!fn)return;
-  fn.perfil={nome:v('p-nome'),tel:v('p-tel'),idade:v('p-idade'),vpref:v('p-vpref'),desde:v('p-desde'),bio:v('p-bio'),foto:document.getElementById('pf-data').value||(fn.perfil||{}).foto||''};
-  msg('msg-perfil','✅ Perfil salvo!','ok');refreshDash();addLog('Perfil',fn.nome+' atualizou perfil');fbSaveFn(fn);
+  const fotoData=document.getElementById('pf-data').value||(fn.perfil||{}).foto||'';
+  fn.perfil={nome:v('p-nome'),tel:v('p-tel'),idade:v('p-idade'),vpref:v('p-vpref'),desde:v('p-desde'),bio:v('p-bio'),foto:fotoData};
+  // Salvar foto no localStorage imediatamente
+  try{if(fotoData)localStorage.setItem('foto_perfil_'+fn.login,fotoData);}catch(e){}
+  msg('msg-perfil','✅ Perfil salvo!','ok');refreshDash();prevCNH();prevCracha();addLog('Perfil',fn.nome+' atualizou perfil');fbSaveFn(fn);
 }
 function salvarVeiculo(){
   const fn=getFn();if(!fn)return;
-  fn.veiculo={modelo:v('v-modelo'),apelido:v('v-apelido'),ano:v('v-ano'),renavam:v('v-renavam'),ipva:v('v-ipva'),placa:v('v-placa').toUpperCase(),carroceria:v('v-carroceria'),marca:v('v-marca'),situacao:v('v-sit'),foto:document.getElementById('v-fd').value||(fn.veiculo||{}).foto||''};
+  const fotoVei=document.getElementById('v-fd').value||(fn.veiculo||{}).foto||'';
+  fn.veiculo={modelo:v('v-modelo'),apelido:v('v-apelido'),ano:v('v-ano'),renavam:v('v-renavam'),ipva:v('v-ipva'),placa:v('v-placa').toUpperCase(),carroceria:v('v-carroceria'),marca:v('v-marca'),situacao:v('v-sit'),foto:fotoVei};
+  try{if(fotoVei)localStorage.setItem('foto_veiculo_'+fn.login,fotoVei);}catch(e){}
   msg('msg-veiculo','✅ Veículo salvo!','ok');addLog('Veículo',fn.nome+' atualizou veículo');fbSaveFn(fn);
 }
 function salvarCNH(){
@@ -2502,7 +2535,13 @@ function motTab(t){
   if(t==='cracha')prevCracha();if(t==='cnh')prevCNH();if(t==='manut')renderHistManut();if(t==='km')renderHistKM();if(t==='conquistas')renderConquistas();if(t==='diario')renderDiario();if(t==='rotas')renderRotas();if(t==='relpes')renderRelPes();if(t==='ferias')renderFeriasHist();if(t==='status'){const fn=getFn();if(fn&&fn.perfil&&fn.perfil.status)stxt('status-atual',fn.perfil.status);}
 }
 function prevCNH(){
-  const fn=getFn();const foto=(fn&&fn.perfil&&fn.perfil.foto)?fn.perfil.foto:'https://placehold.co/62x72/252d3f/7a8499?text=?';
+  const fn=getFn();
+  let foto='https://placehold.co/62x72/252d3f/7a8499?text=?';
+  if(fn&&fn.perfil&&fn.perfil.foto) foto=fn.perfil.foto;
+  else if(fn){try{const lf=localStorage.getItem('foto_perfil_'+fn.login);if(lf)foto=lf;}catch(e){}}
+  // Também checar o input de foto local
+  const pfd=document.getElementById('pf-data');
+  if(pfd&&pfd.value&&pfd.value.length>10)foto=pfd.value;
   const el=document.getElementById('cnh-fp');if(el)el.src=foto;
   stxt('cp-nome',v('cnh-nome')||(fn?fn.nome:'—'));stxt('cp-venc',v('cnh-venc')||'—');stxt('cp-num',v('cnh-num')||'00000000000');
   const cats=[...document.querySelectorAll('.cc:checked')].map(c=>c.value);
@@ -2510,7 +2549,11 @@ function prevCNH(){
 }
 function prevCracha(){
   const fn=getFn();if(!fn)return;const p=fn.perfil||{};
-  const foto=p.foto||(document.getElementById('pf-data')?document.getElementById('pf-data').value:'')||'https://placehold.co/80x80/252d3f/7a8499?text=?';
+  let foto=p.foto||'';
+  if(!foto){try{const lf=localStorage.getItem('foto_perfil_'+fn.login);if(lf)foto=lf;}catch(e){}}
+  const pfd=document.getElementById('pf-data');
+  if(pfd&&pfd.value&&pfd.value.length>10)foto=pfd.value;
+  if(!foto)foto='https://placehold.co/80x80/252d3f/7a8499?text=?';
   const el=document.getElementById('cr-foto');if(el)el.src=foto;
   stxt('cr-nome',p.nome||fn.nome);stxt('cr-cargo',fn.cargo||'Motorista');
   stxt('cr-mat','Matrícula: '+(fn.matricula||'—'));stxt('cr-desde','Na empresa desde: '+(p.desde||'—'));
@@ -2521,7 +2564,8 @@ function prevCracha(){
 function renderMultasCNH(){
   const fn=getFn();if(!fn)return;const el=document.getElementById('cnh-multas');if(!el)return;
   const ms=(fn.cnh&&fn.cnh.multas)||[];
-  el.innerHTML=ms.length?ms.map((m,i)=>`<div class="alert a-er" style="justify-content:space-between"><span>⚠️ <strong>${m.infracao}</strong> — ${m.pontos}pts — ${m.data}</span><button class="btn btn-r btn-xs" onclick="excluirMultaFn('${fn.login}',${i})">🗑</button></div>`).join(''):'<p style="color:var(--mu);font-size:.8rem">Nenhuma multa.</p>';
+  // Motorista só visualiza — sem botão de excluir
+  el.innerHTML=ms.length?ms.map(m=>`<div class="alert a-er">⚠️ <strong>${m.infracao}</strong> — ${m.pontos}pts — ${m.data}</div>`).join(''):'<p style="color:var(--mu);font-size:.8rem">Nenhuma multa registrada.</p>';
 }
 
 /* ══ KM ══ */
@@ -2596,10 +2640,12 @@ function excluirFicha(i){if(!confirm('Excluir?'))return;const fid=DB.inscricoes[
 function criarFn(src){
   const p=src==='adm'?'adm-fn':'rh-fn';const msgId=src==='adm'?'msg-adm-cad':'msg-rh-cad';
   const nome=v(p+'-nome'),login=v(p+'-login'),senha=v(p+'-senha'),mat=v(p+'-mat'),cargo=v(p+'-cargo'),sit=v(p+'-sit');
+  const cnhNum=v(p+'-cnh-num'),cnhVenc=v(p+'-cnh-venc');
   if(!nome||!login||!senha){msg(msgId,'Preencha nome, login e senha.','er');return;}
   if(DB.funcionarios.find(f=>f.login===login)){msg(msgId,'Login já existe!','er');return;}
-  DB.funcionarios.push({nome,login,senha,matricula:mat,cargo,situacao:sit,perfil:{},veiculo:{},cnh:{multas:[]},manutencoes:[],kmRegistros:[]});
-  msg(msgId,'✅ Funcionário cadastrado!','ok');[p+'-nome',p+'-login',p+'-senha',p+'-mat'].forEach(id=>V(id,''));
+  const cnhObj={multas:[],numero:cnhNum||'',vencimento:cnhVenc||'',categorias:[],nome:nome};
+  DB.funcionarios.push({nome,login,senha,matricula:mat,cargo,situacao:sit,perfil:{nome:nome},veiculo:{},cnh:cnhObj,manutencoes:[],kmRegistros:[]});
+  msg(msgId,'✅ Funcionário cadastrado!','ok');[p+'-nome',p+'-login',p+'-senha',p+'-mat',p+'-cnh-num',p+'-cnh-venc'].forEach(id=>V(id,''));
   rhLista();admLista();gerLista();popSel('ms-rh');popSel('ms-adm');popSel('ponto-fn');refreshDash();addLog('RH','Funcionário cadastrado: '+nome);
   fbSaveFn(DB.funcionarios[DB.funcionarios.length-1]);
 }
@@ -2625,7 +2671,9 @@ function rhRel(){
 function verFn(login){
   const fn=DB.funcionarios.find(f=>f.login===login);if(!fn)return;
   const p=fn.perfil||{},ve=fn.veiculo||{},c=fn.cnh||{};const km=(fn.kmRegistros||[]).reduce((a,r)=>a+r.km,0);
-  const foto=p.foto?`<img src="${p.foto}" style="width:70px;height:70px;border-radius:50%;object-fit:cover;border:3px solid var(--acc)"/>`:` <div style="width:70px;height:70px;border-radius:50%;background:var(--bd2);display:flex;align-items:center;justify-content:center;font-size:1.8rem">👤</div>`;
+  let fotoVerUrl=p.foto||'';
+  if(!fotoVerUrl){try{const lf=localStorage.getItem('foto_perfil_'+login);if(lf)fotoVerUrl=lf;}catch(e){}}
+  const foto=fotoVerUrl?`<img src="${fotoVerUrl}" style="width:70px;height:70px;border-radius:50%;object-fit:cover;border:3px solid var(--acc)"/>`:` <div style="width:70px;height:70px;border-radius:50%;background:var(--bd2);display:flex;align-items:center;justify-content:center;font-size:1.8rem">👤</div>`;
   document.getElementById('m-ver-body').innerHTML=`<div style="display:flex;gap:13px;align-items:flex-start;flex-wrap:wrap;margin-bottom:13px">${foto}<div><p style="font-size:1.05rem;font-weight:700">${fn.nome}</p><p style="color:var(--mu);font-size:.78rem">${fn.login} | ${fn.matricula||'—'} | ${fn.cargo||'—'}</p><span class="badge ${fn.situacao==='Ativo'?'bg-g':'bg-r'}" style="margin-top:4px">${fn.situacao}</span><span class="badge bg-b" style="margin-left:4px">📍 ${km.toLocaleString()} km</span></div></div><hr class="divider"/><div class="g2" style="font-size:.8rem;gap:7px"><div><p style="color:var(--mu)">Tel</p><strong>${p.tel||'—'}</strong></div><div><p style="color:var(--mu)">Desde</p><strong>${p.desde||'—'}</strong></div><div><p style="color:var(--mu)">Veículo</p><strong>${ve.modelo||'—'} (${ve.placa||'—'})</strong></div><div><p style="color:var(--mu)">Sit. Veículo</p><strong>${ve.situacao||'—'}</strong></div><div><p style="color:var(--mu)">CNH Nº</p><strong>${c.numero||'—'}</strong></div><div><p style="color:var(--mu)">Vencimento</p><strong>${c.vencimento||'—'}</strong></div><div><p style="color:var(--mu)">Categorias</p><strong>${(c.categorias||[]).join(', ')||'—'}</strong></div><div><p style="color:var(--mu)">Multas</p><strong style="color:var(--rd)">${(c.multas||[]).length}</strong></div></div>${(c.multas||[]).map(m=>`<div class="alert a-er" style="margin-top:3px;padding:6px 10px">⚠️ ${m.infracao} — ${m.pontos}pts — ${m.data}</div>`).join('')}${ve.foto?`<img src="${ve.foto}" style="width:100%;max-width:240px;height:110px;object-fit:cover;border-radius:8px;margin-top:9px"/>`:''} ${p.bio?`<p style="font-size:.78rem;color:var(--mu);font-style:italic;margin-top:7px">"${p.bio}"</p>`:''}`;
   openM('m-ver-fn');
 }
@@ -2646,6 +2694,7 @@ function excluirFn(login){
 /* ══ MULTAS ══ */
 function popSel(id){const el=document.getElementById(id);if(!el)return;el.innerHTML='<option value="">Selecione...</option>'+DB.funcionarios.map(f=>`<option value="${f.login}">${f.nome} (${f.login})</option>`).join('');}
 function aplicarMulta(src){
+  if(!['rh','gerente','admin'].includes(S.role)){alert('🔒 Apenas RH, Gerente ou Admin podem aplicar multas.');return;}
   const[ms,mt,mi,mp,md,msgId]=src==='adm'?['ms-adm','mt-adm','mi-adm','mp-adm','md-adm','msg-adm-mul']:['ms-rh','mt-rh','mi-rh','mp-rh','md-rh','msg-rh-mul'];
   const login=v(ms),tipo=v(mt),inf=v(mi),pts=v(mp),dt=v(md);
   if(!login||!inf){msg(msgId,'Selecione funcionário e detalhe a infração.','er');return;}
@@ -2662,8 +2711,9 @@ function _renderMulHist(el){
   el.innerHTML=todas.length?todas.map(m=>`<div class="alert a-er" style="justify-content:space-between;margin-bottom:5px"><span>⚠️ <strong>${m.nome}</strong> — ${m.infracao} — ${m.pontos}pts — ${m.data}</span><button class="btn btn-r btn-xs" onclick="excluirMultaFn('${m.login}',${m.mi})">🗑</button></div>`).join(''):'<p style="color:var(--mu);font-size:.8rem">Nenhuma multa.</p>';
 }
 function excluirMultaFn(login,i){
+  if(!['rh','gerente','admin'].includes(S.role)){alert('🔒 Apenas RH, Gerente ou Admin podem remover multas.');return;}
   if(!confirm('Excluir multa?'))return;const fn=DB.funcionarios.find(f=>f.login===login);if(!fn||!fn.cnh)return;
-  fn.cnh.multas.splice(i,1);renderMulHist();admMulHist();renderMultasCNH();refreshDash();
+  fn.cnh.multas.splice(i,1);fbSaveFn(fn);renderMulHist();admMulHist();renderMultasCNH();refreshDash();
 }
 
 /* ══ PONTO ══ */
@@ -2765,6 +2815,12 @@ function excluirPeca(i){if(!confirm('Excluir peça?'))return;DB.estoque.splice(i
 function admPerfis(){
   const el=document.getElementById('adm-perfis-html');if(!el)return;
   if(!DB.funcionarios.length){el.innerHTML='<p style="color:var(--mu);font-size:.8rem">Nenhum funcionário.</p>';return;}
+  // Restaurar fotos do localStorage
+  DB.funcionarios.forEach(fn=>{
+    try{
+      if(!(fn.perfil&&fn.perfil.foto)){const fp=localStorage.getItem('foto_perfil_'+fn.login);if(fp){if(!fn.perfil)fn.perfil={};fn.perfil.foto=fp;}}
+    }catch(e){}
+  });
   el.innerHTML=DB.funcionarios.map(fn=>{const p=fn.perfil||{};return`<div class="fn-card">${p.foto?`<img src="${p.foto}" class="fn-av" alt="foto"/>`:` <div class="fn-av-ph">👤</div>`}<div style="flex:1"><div style="font-weight:700;font-size:.88rem">${fn.nome} <span class="badge ${fn.situacao==='Ativo'?'bg-g':'bg-r'}">${fn.situacao}</span></div><div style="font-size:.74rem;color:var(--mu)">${fn.cargo||'—'} | ${fn.matricula||'—'} | ${fn.login}</div><div style="font-size:.76rem;color:var(--mu);margin-top:2px">📱 ${p.tel||'—'} | Idade: ${p.idade||'—'} | Desde: ${p.desde||'—'}</div>${p.bio?`<div style="font-size:.74rem;color:var(--mu);font-style:italic;margin-top:1px">"${p.bio}"</div>`:''}</div><div class="ag"><button class="btn btn-a btn-xs" onclick="editarFn('${fn.login}')">✏️</button><button class="btn btn-r btn-xs" onclick="excluirFn('${fn.login}')">🗑</button></div></div>`;}).join('');
 }
 function admCNHs(){
@@ -2987,6 +3043,35 @@ function negarPermGer(idx){
   renderAdmGerPerms();admSol();
 }
 
+function regKMAdmin(src){
+  const prefix=src==='adm'?'adm-km':'ger-km';
+  const msgId='msg-'+prefix+'-reg';
+  const login=v(prefix+'-fn');
+  const km=parseInt(v(prefix+'-val'));
+  const data=v(prefix+'-data');
+  const rota=v(prefix+'-rota');
+  const carga=v(prefix+'-carga');
+  const obs=v(prefix+'-obs')||'';
+  if(!login||!km||km<=0){msg(msgId,'Selecione o motorista e informe o KM.','er');return;}
+  const fn=DB.funcionarios.find(f=>f.login===login);
+  if(!fn){msg(msgId,'Motorista não encontrado.','er');return;}
+  if(!fn.kmRegistros)fn.kmRegistros=[];
+  const reg={km,data,rota,carga,obs,login:fn.login,nome:fn.nome,id:Date.now(),ts:Date.now()};
+  fn.kmRegistros.push(reg);
+  DB.kmRegistros.push(reg);
+  msg(msgId,'✅ '+km+' km registrado para '+fn.nome+'!','ok');
+  V(prefix+'-val','');V(prefix+'-rota','');V(prefix+'-carga','');V(prefix+'-obs','');
+  fbSaveFn(fn);fbSaveGeneric('kmRegistros',reg);
+  admKM();gerKM();renderRanking();refreshDash();
+  addLog('KM',src==='adm'?'Admin':'Gerente'+' registrou '+km+'km para '+fn.nome);
+}
+
+function popSelKM(id){
+  const el=document.getElementById(id);if(!el)return;
+  el.innerHTML='<option value="">Selecione motorista...</option>'+
+    DB.funcionarios.map(f=>'<option value="'+f.login+'">'+f.nome+' ('+f.login+')</option>').join('');
+}
+
 function forcaSync(){
   showSyncStatus('Sincronizando...');
   if(window.syncFromFirebase){
@@ -3031,7 +3116,7 @@ function refreshDash(){
   stxt('dc-km',totKM.toLocaleString()+' km');
   const pend=DB.inscricoes.filter(f=>f.status==='Pendente').length;const tbP=document.getElementById('tb-pend');const tbPN=document.getElementById('tb-pend-n');if(tbP){tbP.style.display=pend>0?'flex':'none';if(tbPN)tbPN.textContent=pend;}
   stxt('dc-cand-sub',pend>0?pend+' pendente(s)':'');
-  const efn=document.getElementById('d-fns');if(efn)efn.innerHTML=DB.funcionarios.length?DB.funcionarios.slice(-4).reverse().map(f=>`<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--bd)">${(f.perfil&&f.perfil.foto)?`<img src="${f.perfil.foto}" style="width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid var(--acc);flex-shrink:0"/>`:` <div style="width:34px;height:34px;border-radius:50%;background:var(--bd2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.8rem">👤</div>`}<div><div style="font-weight:700;font-size:.84rem">${f.nome}</div><div style="font-size:.7rem;color:var(--mu)">${f.cargo||'—'} <span class="badge ${f.situacao==='Ativo'?'bg-g':'bg-r'}" style="font-size:.59rem">${f.situacao}</span></div></div></div>`).join(''):'<p style="color:var(--mu);font-size:.8rem">Nenhum funcionário.</p>';
+  const efn=document.getElementById('d-fns');if(efn)efn.innerHTML=DB.funcionarios.length?DB.funcionarios.slice(-4).reverse().map(f=>`<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--bd)">${(()=>{let uf=(f.perfil&&f.perfil.foto)||'';try{if(!uf){const lf=localStorage.getItem('foto_perfil_'+f.login);if(lf)uf=lf;}}catch(e){}return uf?`<img src="${uf}" style="width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid var(--acc);flex-shrink:0"/>`:`<div style="width:34px;height:34px;border-radius:50%;background:var(--bd2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.8rem">👤</div>`;})()}<div><div style="font-weight:700;font-size:.84rem">${f.nome}</div><div style="font-size:.7rem;color:var(--mu)">${f.cargo||'—'} <span class="badge ${f.situacao==='Ativo'?'bg-g':'bg-r'}" style="font-size:.59rem">${f.situacao}</span></div></div></div>`).join(''):'<p style="color:var(--mu);font-size:.8rem">Nenhum funcionário.</p>';
   const eav=document.getElementById('d-avs');if(eav)eav.innerHTML=DB.avisos.slice(0,3).map(a=>`<div style="padding:6px 0;border-bottom:1px solid var(--bd)"><div style="font-size:.82rem;font-weight:700">${a.cat} ${a.titulo}</div><div style="font-size:.69rem;color:var(--mu)">${a.data}</div></div>`).join('')||'<p style="color:var(--mu);font-size:.8rem">Nenhum aviso.</p>';
   const emn=document.getElementById('d-mnts');if(emn){const ab=DB.manutencoes.filter(f=>f.status!=='Manutenção Concluída'&&f.status!=='Não Aprovada');emn.innerHTML=ab.length?ab.slice(0,5).map(f=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--bd);gap:6px;flex-wrap:wrap"><div><span style="font-size:.82rem;font-weight:700">🚗 ${f.veiculo}</span><span style="font-size:.7rem;color:var(--mu);margin-left:7px">${f.motorista}</span></div><span class="badge ${sbadge(f.status)}">${f.status}</span></div>`).join(''):'<p style="color:var(--mu);font-size:.8rem">Nenhuma manutenção aberta ✅</p>';}
 }
